@@ -9,7 +9,7 @@ namespace LibraryGradProject.Controllers
     public class BooksController : ApiController
     {
         private IRepository<Book> _bookRepo;
-        
+
         public BooksController(IRepository<Book> bookRepository)
         {
             _bookRepo = bookRepository;
@@ -42,8 +42,18 @@ namespace LibraryGradProject.Controllers
         // PUT api/values/{int}
         public void Put(Book newBook)
         {
-            // TODO
-            throw new NotImplementedException();
+            Book oldBook = _bookRepo.Get(newBook.Id);
+            if (oldBook != null)
+            {
+                oldBook.ISBN = newBook.ISBN;
+                oldBook.Title = newBook.Title;
+                oldBook.Author = newBook.Author;
+                oldBook.PublishDate = newBook.PublishDate;
+            }
+            else
+            {
+                _bookRepo.Add(newBook);
+            }
         }
     }
 }
