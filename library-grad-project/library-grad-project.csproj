@@ -185,6 +185,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Contexts\ILibraryContext.cs" />
     <Compile Include="Contexts\LibraryContext.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />

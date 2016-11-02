@@ -3,9 +3,9 @@ using LibraryGradProject.Models;
 
 namespace LibraryGradProject.Contexts
 {
-    public class LibraryContext : DbContext
+    public class LibraryContext : DbContext, ILibraryContext
     {
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
+        public IDbSet<Book> Books { get; set; }
+        public IDbSet<Reservation> Reservations { get; set; }
     }
 }

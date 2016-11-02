@@ -8,9 +8,7 @@ namespace LibraryGradProject.Repos
 {
     public class FilledBookRepository : BookRepository
     {
-        private LibraryContext _dbContext;
-
-        public FilledBookRepository(LibraryContext dbContext) : base(dbContext)
+        public FilledBookRepository(ILibraryContext dbContext) : base(dbContext)
         {
             Book bookA = new Book
             {

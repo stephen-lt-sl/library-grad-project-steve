@@ -7,9 +7,9 @@ namespace LibraryGradProject.Repos
 {
     public class BookRepository : IRepository<Book>
     {
-        private LibraryContext _dbContext;
+        private ILibraryContext _dbContext;
 
-        public BookRepository(LibraryContext dbContext)
+        public BookRepository(ILibraryContext dbContext)
         {
             _dbContext = dbContext;
         }
