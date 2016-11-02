@@ -185,6 +185,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Contexts\LibraryContext.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -201,6 +202,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="LibraryDatabase.mdf" />
+    <Content Include="LibraryDatabase_log.ldf">
+      <DependentUpon>LibraryDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
