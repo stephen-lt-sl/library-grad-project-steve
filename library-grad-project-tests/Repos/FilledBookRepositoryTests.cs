@@ -71,7 +71,7 @@ namespace LibraryGradProjectTests.Repos
             IEnumerable<Book> books = repo.GetAll();
 
             
-            // Asert
+            // Assert
             Assert.Equal(2, books.Last().Id);
         }
 
@@ -88,7 +88,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             Book book = repo.Get(3);
 
-            // Asert
+            // Assert
             Assert.Equal(newBook2, book);
         }
 
@@ -105,7 +105,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             books.ShouldDeepEqual(new Book[] { bookA, bookB, newBook1, newBook2 });
         }
 
@@ -125,7 +125,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Remove(3);
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             books.ShouldDeepEqual(new Book[] { bookA, bookB, newBook1, newBook3 });
         }
     }

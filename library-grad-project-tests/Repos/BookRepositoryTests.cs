@@ -21,7 +21,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Empty(books);
         }
 
@@ -51,7 +51,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Add(newBook);
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(0, books.First().Id);
         }
 
@@ -68,7 +68,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             Book book = repo.Get(1);
 
-            // Asert
+            // Assert
             Assert.Equal(newBook2, book);
         }
 
@@ -85,7 +85,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(new Book[] { newBook1, newBook2 }, books.ToArray());
         }
 
@@ -105,7 +105,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Remove(1);
             IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(new Book[] { newBook1, newBook3 }, books.ToArray());
         }
     }

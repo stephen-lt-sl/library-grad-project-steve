@@ -22,7 +22,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             IEnumerable<Reservation> reservations = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Empty(reservations);
         }
 
@@ -37,7 +37,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Add(newReservation);
             IEnumerable<Reservation> reservations = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(new Reservation[] { newReservation }, reservations.ToArray());
         }
 
@@ -52,7 +52,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Add(newReservation);
             IEnumerable<Reservation> reservations = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(0, reservations.First().Id);
         }
 
@@ -82,7 +82,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             repo.Add(newReservation1);
 
-            // Asert
+            // Assert
             Assert.Throws<System.Exception>(() => repo.Add(newReservation2));
         }
 
@@ -99,7 +99,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             Reservation reservation = repo.Get(1);
 
-            // Asert
+            // Assert
             Assert.Equal(newReservation2, reservation);
         }
 
@@ -116,7 +116,7 @@ namespace LibraryGradProjectTests.Repos
             // Act
             IEnumerable<Reservation> reservations = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(new Reservation[] { newReservation1, newReservation2 }, reservations.ToArray());
         }
 
@@ -136,7 +136,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Remove(1);
             IEnumerable<Reservation> reservations = repo.GetAll();
 
-            // Asert
+            // Assert
             Assert.Equal(new Reservation[] { newReservation1, newReservation3 }, reservations.ToArray());
         }
     }
