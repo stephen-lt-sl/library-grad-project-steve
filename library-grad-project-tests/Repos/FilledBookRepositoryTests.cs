@@ -1,6 +1,6 @@
 ﻿using LibraryGradProject.Models;
 using LibraryGradProject.Repos;
-using LibraryGradProject.Contexts;
+using LibraryGradProjectTests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,11 +11,9 @@ namespace LibraryGradProjectTests.Repos
 {
     public class FilledBookRepositoryTests
     {
-        private Mock<LibraryContext> mockDb = new Mock<LibraryContext>();
-
         private Book bookA = new Book
         {
-            Id = 0,
+            Id = 1,
             ISBN = "ABCD1234",
             Title = "Cool book",
             Author = "Book Writer",
@@ -24,7 +22,7 @@ namespace LibraryGradProjectTests.Repos
 
         private Book bookB = new Book
         {
-            Id = 1,
+            Id = 2,
             ISBN = "EFGH5678",
             Title = "Lame Book",
             Author = "Booker Writeman",
@@ -35,7 +33,8 @@ namespace LibraryGradProjectTests.Repos
         public void New_Filled_Book_Repository_Contains_2_Books()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
 
             // Act
             IEnumerable<Book> books = repo.GetAll();
@@ -48,7 +47,8 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Inserts_New_Book()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
             Book newBook = new Book() { Title = "Test" };
 
             // Act
@@ -63,7 +63,8 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Sets_New_Id()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
             Book newBook = new Book() { Title = "Test" };
 
             // Act
@@ -72,21 +73,22 @@ namespace LibraryGradProjectTests.Repos
 
             
             // Assert
-            Assert.Equal(2, books.Last().Id);
+            Assert.Equal(3, books.Last().Id);
         }
 
         [Fact]
         public void Get_Returns_Specific_Book()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
-            Book newBook1 = new Book() { Id = 0, Title = "Test1" };
-            Book newBook2 = new Book() { Id = 1, Title = "Test2" };
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
+            Book newBook1 = new Book() { Title = "Test1" };
+            Book newBook2 = new Book() { Title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
             // Act
-            Book book = repo.Get(3);
+            Book book = repo.Get(4);
 
             // Assert
             Assert.Equal(newBook2, book);
@@ -96,7 +98,8 @@ namespace LibraryGradProjectTests.Repos
         public void Get_All_Returns_All_Books()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
             Book newBook1 = new Book() { Title = "Test1" };
             Book newBook2 = new Book() { Title = "Test2" };
             repo.Add(newBook1);
@@ -113,7 +116,8 @@ namespace LibraryGradProjectTests.Repos
         public void Delete_Removes_Correct_Book()
         {
             // Arrange
-            FilledBookRepository repo = new FilledBookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            FilledBookRepository repo = new FilledBookRepository(mockDb);
             Book newBook1 = new Book() { Title = "Test1" };
             Book newBook2 = new Book() { Title = "Test2" };
             Book newBook3 = new Book() { Title = "Test3" };
@@ -122,7 +126,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Add(newBook3);
 
             // Act
-            repo.Remove(3);
+            repo.Remove(4);
             IEnumerable<Book> books = repo.GetAll();
 
             // Assert

@@ -1,6 +1,6 @@
 ﻿using LibraryGradProject.Models;
 using LibraryGradProject.Repos;
-using LibraryGradProject.Contexts;
+using LibraryGradProjectTests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
@@ -10,41 +10,41 @@ namespace LibraryGradProjectTests.Repos
 {
     public class BookRepositoryTests
     {
-        private Mock<LibraryContext> mockDb = new Mock<LibraryContext>();
-
         [Fact]
         public void New_Book_Repository_Is_Empty()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
 
             // Act
             IEnumerable<Book> books = repo.GetAll();
 
             // Assert
-            Assert.Empty(books);
+            Assert.Equal(new Book[] { }, books);
         }
 
         [Fact]
         public void Add_Inserts_New_Book()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
             Book newBook = new Book() { Title = "Test" };
 
             // Act
             repo.Add(newBook);
-            IEnumerable<Book> books = repo.GetAll();
 
-            // Asert
-            Assert.Equal(new Book[] {newBook}, books.ToArray());
+            // Assert
+            Assert.Equal(newBook, mockDb.Books.First());
         }
 
         [Fact]
         public void Add_Sets_New_Id()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
             Book newBook = new Book() { Title = "Test" };
 
             // Act
@@ -52,21 +52,22 @@ namespace LibraryGradProjectTests.Repos
             IEnumerable<Book> books = repo.GetAll();
 
             // Assert
-            Assert.Equal(0, books.First().Id);
+            Assert.Equal(1, books.First().Id);
         }
 
         [Fact]
         public void Get_Returns_Specific_Book()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
-            Book newBook1 = new Book() { Id = 0, Title = "Test1" };
-            Book newBook2 = new Book() { Id = 1, Title = "Test2" };
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
+            Book newBook1 = new Book() { Title = "Test1" };
+            Book newBook2 = new Book() { Title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
             // Act
-            Book book = repo.Get(1);
+            Book book = repo.Get(2);
 
             // Assert
             Assert.Equal(newBook2, book);
@@ -76,7 +77,8 @@ namespace LibraryGradProjectTests.Repos
         public void Get_All_Returns_All_Books()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
             Book newBook1 = new Book() { Title = "Test1" };
             Book newBook2 = new Book() { Title = "Test2" };
             repo.Add(newBook1);
@@ -93,7 +95,8 @@ namespace LibraryGradProjectTests.Repos
         public void Delete_Removes_Correct_Book()
         {
             // Arrange
-            BookRepository repo = new BookRepository(mockDb.Object);
+            MockLibraryContext mockDb = new MockLibraryContext();
+            BookRepository repo = new BookRepository(mockDb);
             Book newBook1 = new Book() { Title = "Test1" };
             Book newBook2 = new Book() { Title = "Test2" };
             Book newBook3 = new Book() { Title = "Test3" };
@@ -102,7 +105,7 @@ namespace LibraryGradProjectTests.Repos
             repo.Add(newBook3);
 
             // Act
-            repo.Remove(1);
+            repo.Remove(2);
             IEnumerable<Book> books = repo.GetAll();
 
             // Assert
