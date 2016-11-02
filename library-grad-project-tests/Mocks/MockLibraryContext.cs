@@ -12,15 +12,15 @@ namespace LibraryGradProjectTests.Mocks
 
         public MockLibraryContext()
         {
-            Books = new InMemoryDbSet<Book>();
-            Reservations = new InMemoryDbSet<Reservation>();
+            Books = new InMemoryDbSet<Book>(true);
+            Reservations = new InMemoryDbSet<Reservation>(true);
         }
 
         public int SaveChanges()
         {
             int changeCount = 0;
-            changeCount += DbSetHelper.IncrementPrimaryKey<Book>(b => b.Id, Books);
-            changeCount += DbSetHelper.IncrementPrimaryKey<Reservation>(r => r.Id, Reservations);
+            changeCount += DbSetHelper.IncrementPrimaryKey(b => b.Id, Books);
+            changeCount += DbSetHelper.IncrementPrimaryKey(r => r.Id, Reservations);
             return changeCount;
         }
 
