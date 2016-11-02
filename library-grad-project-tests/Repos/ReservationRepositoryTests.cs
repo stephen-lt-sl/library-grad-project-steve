@@ -1,19 +1,23 @@
 ﻿using LibraryGradProject.Models;
 using LibraryGradProject.Repos;
+using LibraryGradProject.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using Xunit;
 
 namespace LibraryGradProjectTests.Repos
 {
     public class ReservationRepositoryTests
     {
+        private Mock<LibraryContext> mockDb = new Mock<LibraryContext>();
+
         [Fact]
         public void New_Reservation_Repository_Is_Empty()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
 
             // Act
             IEnumerable<Reservation> reservations = repo.GetAll();
@@ -26,7 +30,7 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Inserts_New_Reservation()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation = new Reservation() { BeginDate = new DateTime() };
 
             // Act
@@ -41,7 +45,7 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Sets_New_Id()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation = new Reservation() { BookId = 0 };
 
             // Act
@@ -56,7 +60,7 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Not_Throws_If_Reservation_Slot_Not_In_Use()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation1 = new Reservation() { BeginDate = new DateTime(100), EndDate = new DateTime(500) };
             Reservation newReservation2 = new Reservation() { BeginDate = new DateTime(600), EndDate = new DateTime(700) };
 
@@ -71,7 +75,7 @@ namespace LibraryGradProjectTests.Repos
         public void Add_Throws_If_Reservation_Slot_In_Use()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation1 = new Reservation() { BeginDate = new DateTime(100), EndDate = new DateTime(500) };
             Reservation newReservation2 = new Reservation() { BeginDate = new DateTime(400), EndDate = new DateTime(700) };
 
@@ -86,7 +90,7 @@ namespace LibraryGradProjectTests.Repos
         public void Get_Returns_Specific_Reservation()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation1 = new Reservation() { Id = 0, BookId = 0 };
             Reservation newReservation2 = new Reservation() { Id = 1, BookId = 1 };
             repo.Add(newReservation1);
@@ -103,7 +107,7 @@ namespace LibraryGradProjectTests.Repos
         public void Get_All_Returns_All_Reservations()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation1 = new Reservation() { BookId = 0 };
             Reservation newReservation2 = new Reservation() { BookId = 1 };
             repo.Add(newReservation1);
@@ -120,7 +124,7 @@ namespace LibraryGradProjectTests.Repos
         public void Delete_Removes_Correct_Reservation()
         {
             // Arrange
-            ReservationRepository repo = new ReservationRepository();
+            ReservationRepository repo = new ReservationRepository(mockDb.Object);
             Reservation newReservation1 = new Reservation() { BookId = 0 };
             Reservation newReservation2 = new Reservation() { BookId = 1 };
             Reservation newReservation3 = new Reservation() { BookId = 2 };

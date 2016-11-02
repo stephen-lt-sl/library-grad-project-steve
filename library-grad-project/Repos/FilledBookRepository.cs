@@ -1,12 +1,16 @@
 ﻿using LibraryGradProject.Models;
+using LibraryGradProject.Contexts;
+using LibraryGradProject.Repos;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace LibraryGradProject.Repos
 {
-    public class FilledBookRepository : IRepository<Book>
+    public class FilledBookRepository : BookRepository
     {
-        public FilledBookRepository()
+        private LibraryContext _dbContext;
+
+        public FilledBookRepository(LibraryContext dbContext) : base(dbContext)
         {
             Book bookA = new Book
             {
@@ -24,30 +28,6 @@ namespace LibraryGradProject.Repos
             };
             Add(bookA);
             Add(bookB);
-        }
-
-        private List<Book> _bookCollection = new List<Book>();
-
-        public void Add(Book entity)
-        {
-            entity.Id = _bookCollection.Count;
-            _bookCollection.Add(entity);
-        }
-
-        public IEnumerable<Book> GetAll()
-        {
-            return _bookCollection;
-        }
-
-        public Book Get(int id)
-        {
-            return _bookCollection.Where(book => book.Id == id).SingleOrDefault();
-        }
-
-        public void Remove(int id)
-        {
-            Book bookToRemove = Get(id);
-            _bookCollection.Remove(bookToRemove);
         }
     }
 }
