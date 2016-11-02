@@ -16,7 +16,6 @@ namespace LibraryGradProject.Repos
 
         public void Add(Book entity)
         {
-            entity.Id = _dbContext.Books.Count();
             _dbContext.Books.Add(entity);
             _dbContext.SaveChanges();
         }

@@ -23,7 +23,6 @@ namespace LibraryGradProject.Repos
             {
                 throw new System.Exception("Reservation timeslot is already reserved.");
             }
-            entity.Id = _dbContext.Reservations.Count();
             _dbContext.Reservations.Add(entity);
             _dbContext.SaveChanges();
         }
